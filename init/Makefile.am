@@ -12,7 +12,7 @@ AUTOMAKE_OPTIONS=foreign no-installinfo
 EXTRA_SCRIPTS=							\
 	sh ksh zsh bash bash_completion				\
 	csh tcsh						\
-	perl.pm python.py ruby.rb cmake				\
+	perl.pm python.py ruby.rb cmake	r.R			\
 	.modulespath
 
 INIT_FILES=${EXTRA_SCRIPTS}
