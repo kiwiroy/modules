@@ -1,6 +1,6 @@
 @VERSIONING@if (! is.na(Sys.getenv( "MODULE_VERSION", unset = NA ))) {
 @VERSIONING@	Sys.setenv("MODULE_VERSION_STACK"="@VERSION@")
-@VERSIONING@    Sys.setenv("MODULE_VERSION"="@VERSION@")
+@VERSIONING@  Sys.setenv("MODULE_VERSION"="@VERSION@")
 @VERSIONING@} else {
 @VERSIONING@	Sys.setenv("MODULE_VERSION_STACK"=Sys.getenv("MODULE_VERSION"))
 @VERSIONING@}
@@ -26,18 +26,16 @@ module <- function(...){
   invisible(0)
 }
 
-if (! is.na(Sys.getenv( "MODULEPATH", unset = NA ))) {
+if (is.na(Sys.getenv( "MODULEPATH", unset = NA ))) {
 	dotfile <- file("@INITPATH@/.modulespath", "r")
-        paths <- gsub("^\\s*", "", readLines(dotfile), perl=TRUE)
-        paths <- gsub("[\\s#].*$", "", paths, perl=TRUE)
+  paths <- gsub("^\\s*", "", readLines(dotfile), perl=TRUE)
+  paths <- gsub("[\\s#].*$", "", paths, perl=TRUE)
 	modulepath <- paste0(paths[grepl("\\S", paths, perl=TRUE)], collapse=':')
 
-	Sys.setenv("MODULEPATH"=modulepath);
-        close(dotfile)
+	Sys.setenv("MODULEPATH"=modulepath)
+  close(dotfile)
 }
 
-if (! is.na(Sys.getenv( "LOADEDMODULES", unset = NA ))) {
+if (is.na(Sys.getenv( "LOADEDMODULES", unset = NA ))) {
 	Sys.setenv("LOADEDMODULES"="");
 }
-
-1;
