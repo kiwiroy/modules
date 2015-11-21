@@ -23,6 +23,7 @@ EXTRA_DIST = config/config.rpath config/mkinstalldirs			\
 	init/bash.in init/sh.in init/zsh.in				\
 	init/csh.in init/ksh.in init/perl.pm.in init/python.py.in	\
 	init/ruby.rb.in init/cmake.in init/bash_completion.in		\
+	init/r.R.in                                                     \
 	modulefiles/lang/.mklang					\
 	LICENSE.GPL ChangeLog ABOUT-NLS
 

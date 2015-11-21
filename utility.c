@@ -949,6 +949,8 @@ static int Output_Directory_Change(
 		fprintf(stdout, "os.chdir('%s')\n", change_dir);
 	} else if( !strcmp( shell_derelict, "ruby")) {
 		fprintf(stdout, "Dir.chdir('%s')\n", change_dir);
+	} else if( !strcmp( shell_derelict, "r")) {
+		fprintf(stdout, "setwd('%s')%s", change_dir, shell_cmd_separator);
 	} else {
 		retval = TCL_ERROR;
 	}
@@ -1108,6 +1110,16 @@ static int output_set_variable(	Tcl_Interp	*interp,
 			shell_cmd_separator);
 		null_free((void *)&escaped);
 
+	} else if (!strcmp((char *) shell_derelict, "r")) {
+    /**
+     **  R
+     **/
+		char *escaped = stringer(NULL, strlen(val) * 2 + 1, NULL);
+		EscapePerlString(val, escaped);
+		fprintf(stdout, "Sys.setenv('%s'='%s')%s", var, escaped,
+			shell_cmd_separator);
+		null_free((void *)&escaped);
+
 	} else if (!strcmp((char *) shell_derelict, "python")) {
     /**
      **  PYTHON
@@ -1206,6 +1218,9 @@ static int output_unset_variable(
 		fprintf(stdout, "(putenv \"%s\")\n", var);
 	} else if (!strcmp(shell_derelict, "mel")) {
 		fprintf(stdout, "putenv \"%s\" \"\";", var);
+	} else if (!strcmp(shell_derelict, "r")) {
+		fprintf(stdout, "Sys.unsetenv('%s')%s", var,
+			shell_cmd_separator);
 	} else {
 		if (OK != ErrorLogger(ERR_DERELICT, LOC, shell_derelict, NULL))
 			return (TCL_ERROR); /** ------ EXIT (FAILURE) -----> **/
