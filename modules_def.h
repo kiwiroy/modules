@@ -51,6 +51,11 @@
 #  define TCL_RESULT(interp) Tcl_GetStringResult(interp)
 #endif
 
+#if (TCL_MAJOR_VERSION == 8) && (TCL_MINOR_VERSION < 6)
+#  define Tcl_GetErrorLine(interp) ((interp)->errorLine)
+#  define Tcl_SetErrorLine(interp, val) ((interp)->errorLine) = val
+#endif
+
 #ifndef HAVE_STDINT_H
 /* assume 32 bit - hope for the best */
 typedef	int	intptr_h;
